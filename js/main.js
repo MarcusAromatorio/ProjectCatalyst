@@ -29,6 +29,7 @@ var Catalyst = (function (game){
 	game.update = function (){
 
 		// Temporary pause feature: will be improved. Used for debug purposes
+		// Currently cannot un-pause, used to look at interactions more closely
 		if(game.keydown[game.KEYBOARD["KEY_P"]] && !game.paused)
 			game.paused = true;
 		else
@@ -36,6 +37,7 @@ var Catalyst = (function (game){
 
 		if(game.paused){
 			// Exit update()
+			console.log(game.GRAVITY.y);
 			return;
 		}
 		// End temporary pause feature
@@ -143,7 +145,7 @@ var Catalyst = (function (game){
 		switch(game.state){
 			case game.states.MAIN_MECHANIC_DEMO:
 			// To begin the demonstration, twenty demo particles are added to the scene
-				game.makeParticles("demo", 20, 40, 100, 10);
+				game.makeParticles("demo", 50, 320, 100, 10);
 				game.update();
 			break;
 			default:

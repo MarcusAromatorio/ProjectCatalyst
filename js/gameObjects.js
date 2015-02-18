@@ -4,7 +4,7 @@
 * This script utilizes the module pattern's "loose augmentation" technique, referenced here:
 * http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html
 *
-* Version 1.0
+* Version 1.1
 * Authors: Marcus Aromatorio
 *
 */
@@ -28,25 +28,16 @@ var Catalyst = (function (game) {
 	game.makeParticle = function(type, x, y){
 
 		// Begin constructing the ball object
-		var particle = {};
+		var particle = new Particle(type, x, y);
 
-		particle.position = vec2d.newVector(x, y);
-		particle.velocity = vec2d.newVector(0, 0);
-		particle.acceleration = vec2d.newVector(0,0);
-		particle.addForce = _addForce;
-		particle.update = _updateParticle;
-		particle.collidingWith = _collidingWith;
-		particle.addForce = _addForce;
-		particle.checkReaction = _checkReaction;
-		particle.setPosition = _setPosition;
-		particle.collisionList = [];
-		particle.type = type;
+
 
 		switch(type){
 			case "catalyst": // The catalyst particle has different properties than default
-				particle.mass = 0.8;
+				particle.mass = 1.2;
 				particle.radius = 3;
 				particle.color = "red";
+			break;
 			case "demo": // The demonstration chemical is the same as the default
 			default:
 				particle.mass = 1.0;
@@ -62,6 +53,28 @@ var Catalyst = (function (game) {
 		return particle;
 
 	};
+
+	var Particle = function(type, x, y){
+
+		this.x = x;
+		this.y = y;
+		this.mass = 0.0;
+		this.radius = 5;
+		this.color = "green"
+
+		this.position = vec2d.newVector(x, y);
+		this.velocity = vec2d.newVector(0, 0);
+		this.acceleration = vec2d.newVector(0,0);
+		this.addForce = _addForce;
+		this.update = _updateParticle;
+		this.collidingWith = _collidingWith;
+		this.addForce = _addForce;
+		this.checkReaction = _checkReaction;
+		this.setPosition = _setPosition;
+		this.collisionList = [];
+		this.type = type;
+
+	}
 
 	/*
 	* Method that calls makeParticle a specified number of times, giving each particle a specific offset location
@@ -88,7 +101,7 @@ var Catalyst = (function (game) {
 			offsetX += particle.radius * 2;
 
 			// If the number of particles already made is divisible by rowLength, the row is full
-			if(i % rowLength == 0){
+			if(i % rowLength == 0 && i != 0){
 				// Increment offsetY and reset offsetX to start a new row
 				offsetX = startX + particle.radius;
 				offsetY += particle.radius * 2;
@@ -156,6 +169,7 @@ var Catalyst = (function (game) {
 				// The demonstration particle changes color and type to continue reaction
 				this.type = "catalyst";
 				this.color = "red";
+				this.radius = 3;
 			break;
 			case "catalyst":
 			default:
@@ -176,10 +190,12 @@ var Catalyst = (function (game) {
 	*/
 	function _addForce(force){
 		// Scale the force by the inverse of mass, Newtons Second Law
-		force.scale(1.0/this.mass);
+		var tempVector = vec2d.newVector(force.x, force.y);
+
+		tempVector.scale(1.0/this.mass);
 
 		// Add the force to acceleration
-		this.acceleration.add(force);
+		this.acceleration.add(tempVector);
 	}
 
 	/*

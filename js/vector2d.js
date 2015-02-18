@@ -4,7 +4,7 @@
 * 
 * This script follows the Javascript Module pattern, and adds a variable named "vec2d" to the global scope
 *
-* Version 1.0
+* Version 1.1
 * Author: Marcus Aromatorio
 */
 
@@ -24,20 +24,23 @@ var vec2d = (function(){
 	*
 	*/
 	function newVector(x, y){
-		var vector = {};
-
-		// Set x and y values 
-		vector.x = x;
-		vector.y = y;
-
-		// Add methods to the vector
-		vector.scale = _scale;
-		vector.magSq = _magSq;
-		vector.mag = _mag;
-		vector.normalize = _normalize;
-		vector.add = _add;
+		var vector = new Vector(x, y);
 
 		return vector;
+	}
+
+	var Vector = function (x, y){
+
+		this.x = x;
+		this.y = y;
+
+		// Add methods to the vector
+		this.scale = _scale;
+		this.magSq = _magSq;
+		this.mag = _mag;
+		this.normalize = _normalize;
+		this.add = _add;
+		
 	}
 
 	/*
