@@ -113,6 +113,21 @@ var Catalyst = (function (game){
 		var ctx = game.ctx;
 
 		ctx.clearRect(0, 0, game.canvas.width, game.canvas.height);
+		
+		// Draw the background image
+		var backgroundImage = new Image();
+		backgroundImage.src = "images/background.jpg";
+		ctx.drawImage(backgroundImage,0,0);
+		
+		// Draw the objective text
+		ctx.save();
+		ctx.font = 'bold 20px Orbitron';
+		ctx.fillStyle = "#818181";
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
+		var objectiveString = "Hello";
+		ctx.fillText(game.levelInformation[0].objectiveText,320,30);
+		ctx.restore();
 
 		// TODO: Once more functions and states are complete, clean up this section for readability
 		// Until then, loop through list of particles and draw them
