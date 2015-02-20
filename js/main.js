@@ -94,10 +94,22 @@ var Catalyst = (function (game){
 			}
 		}// End first for-loop
 
+
 		// Draw the screen after updating
 		game.draw();
 	};
 
+
+	game.checkSuccess = function(){
+		var gameWon = true;
+		for(var i = 0; i < game.particles.length; i++){
+
+			if(game.particles[i].type != "catalyst"){
+				gameWon = false;
+			}
+		}
+		return gameWon;
+	}
 
 	/*
 	* Main draw method
@@ -127,6 +139,8 @@ var Catalyst = (function (game){
 		ctx.textBaseline = "middle";
 		var objectiveString = "Hello";
 		ctx.fillText(game.levelInformation[0].objectiveText,320,30);
+		if(game.checkSuccess())
+			ctx.fillText("You've won!", 320, 150);
 		ctx.restore();
 
 		// TODO: Once more functions and states are complete, clean up this section for readability
