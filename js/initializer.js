@@ -58,6 +58,11 @@ var Catalyst = (function(){
 	// All scripts will have been loaded when the window.onload event fires
 	window.onload = game.init;
 
+	// This short event removes the right click context menu on this page
+	window.oncontextmenu = function(){
+		return false;
+	}
+
 	// the game object is returned here so that it may be added to in other scripts that augment it
 	return game;
 }());

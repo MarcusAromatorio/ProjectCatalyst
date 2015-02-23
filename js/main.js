@@ -173,7 +173,7 @@ var Catalyst = (function (game){
 		// Game-state dependent, uses switch statement to start different scenarios
 		switch(game.state){
 			case game.states.MAIN_MECHANIC_DEMO:
-			// To begin the demonstration, twenty demo particles are added to the scene
+			// To begin the demonstration, fifty demo particles are added to the scene
 				game.makeParticles("demo", 50, 320, 100, 10);
 				game.update();
 			break;

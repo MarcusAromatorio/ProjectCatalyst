@@ -33,7 +33,12 @@ var Catalyst = (function (game) {
 				var mouse = game.getMouse(e);
 				// The player is clicking inside the demonstration of the main mechanic
 				// All that needs to be done is to drop the catalyst from the mouse location
-				game.makeParticle("catalyst", mouse.x, mouse.y);
+				if(e.button == 0)
+					game.makeParticle("catalyst", mouse.x, mouse.y);
+				else if(e.button == 1)
+					game.makeParticle("demo", mouse.x, mouse.y);
+				else if(e.button == 2)
+					game.makeParticle("catalyst2", mouse.x, mouse.y);
 			break;
 			default:
 				// Should not arrive at this code block
