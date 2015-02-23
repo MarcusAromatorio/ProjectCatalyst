@@ -95,7 +95,6 @@ var Catalyst = (function (game){
 		}// End first for-loop
 		console.log(game.state);
 
-
 		// Draw the screen after updating
 		game.draw();
 		
@@ -108,7 +107,6 @@ var Catalyst = (function (game){
 
 	game.checkSuccess = function(){
 		var gameWon = true;
-<<<<<<< HEAD
 		for(var i = 0; i < game.particles.length; i++) {
 			// For the first level, win only if there are no green particles
 			if(game.currentLevel == 2) {
@@ -130,14 +128,6 @@ var Catalyst = (function (game){
 			game.state = game.states.ENDED_GAME;
 			game.particles = [];
 		}
-=======
-		for(var i = 0; i < game.particles.length; i++){
-
-			if(game.particles[i].type != "catalyst"){
-				gameWon = false;
-			}
-		}
->>>>>>> origin/master
 		return gameWon;
 	}
 
@@ -166,7 +156,6 @@ var Catalyst = (function (game){
 		ctx.fillStyle = "#818181";
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
-<<<<<<< HEAD
 		
 		// Display the text for the main menu
 		if(game.state == game.states.MAIN_MENU) {
