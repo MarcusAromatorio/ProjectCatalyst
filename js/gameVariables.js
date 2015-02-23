@@ -7,7 +7,7 @@
 * http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html
 *
 * Version 1.0
-* Authors: Marcus Aromatorio
+* Authors: Marcus Aromatorio & Joseph Horsmann 
 */
 
 // Strict Mode adheres to ECMAScript 5's syntax manually
@@ -25,7 +25,8 @@ var Catalyst = (function (game){
 	game.animationID;
 	game.deltaTime;
 	game.lastTime;
-	game.paused= false;
+	game.paused = false;
+	game.currentLevel = 0;
 
 
 	// Returning the augmented game object back to the global scope to allow further augmentations

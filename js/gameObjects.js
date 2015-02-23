@@ -5,7 +5,7 @@
 * http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html
 *
 * Version 1.1
-* Authors: Marcus Aromatorio
+* Authors: Marcus Aromatorio & Joseph Horsmann 
 *
 */
 
@@ -37,6 +37,11 @@ var Catalyst = (function (game) {
 				particle.mass = 1.2;
 				particle.radius = 3;
 				particle.color = "red";
+			break;
+			case "catalyst2": // The second catalyst particle is large and blue
+				particle.mass = 2.4;
+				particle.radius = 7;
+				particle.color = "blue";
 			break;
 			case "demo": // The demonstration chemical is the same as the default
 			default:
@@ -153,9 +158,13 @@ var Catalyst = (function (game) {
 		// Temporary variable to track if a reaction will occur
 		var shouldReact = false;
 
+		// Check the list of collided particles for specific types
 		for(var i = 0; i < this.collisionList.length; i++){
-			// Make sure that the particle collded with a catalyst AND isn't already a catalyst itself
-			if(this.collisionList[i].type == "catalyst" && this.type != "catalyst")
+			if(this.collisionList[i].type == "catalyst" && this.type == "demo")
+				shouldReact = true;
+			else if(this.collisionList[i].type == "catalyst2" && this.type == "catalyst")
+				shouldReact = true;
+			else if(this.collisionList[i].type == "demo" && this.type == "catalyst2")
 				shouldReact = true;
 		}// End for-loop
 
@@ -172,6 +181,15 @@ var Catalyst = (function (game) {
 				this.radius = 3;
 			break;
 			case "catalyst":
+				this.type = "catalyst2";
+				this.color = "blue";
+				this.radius = 7;
+			break;
+			case "catalyst2":
+				this.type = "demo";
+				this.color = "green";
+				this.radius = 5;
+			break;
 			default:
 				// Catalysts and default-type particles do nothing on their own & this block should not execute
 				console.log( "Erroneous collision response");

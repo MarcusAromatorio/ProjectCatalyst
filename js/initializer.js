@@ -27,7 +27,7 @@ var Catalyst = (function(){
 	game.init = function(){
 
 		// To begin, game variables are defined
-		game.state = game.states.MAIN_MECHANIC_DEMO;
+		game.state = game.states.MAIN_MENU;
 		game.lastTime = (+new Date);	// (+new Date) calls the Date.valueOf() function, returning a primitive number
 		game.canvas = document.querySelector("canvas");
 		game.ctx = game.canvas.getContext("2d");
@@ -57,6 +57,11 @@ var Catalyst = (function(){
 	// The initialization of the game begins after the page has completed loading
 	// All scripts will have been loaded when the window.onload event fires
 	window.onload = game.init;
+
+	// This short event removes the right click context menu on this page
+	window.oncontextmenu = function(){
+		return false;
+	}
 
 	// the game object is returned here so that it may be added to in other scripts that augment it
 	return game;

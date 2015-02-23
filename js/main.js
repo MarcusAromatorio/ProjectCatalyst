@@ -6,7 +6,7 @@
 * http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html
 *
 * Version 1.0
-* Authors: Marcus Aromatorio
+* Authors: Marcus Aromatorio & Joseph Horsmann 
 *
 */
 
@@ -93,11 +93,43 @@ var Catalyst = (function (game){
 
 			}
 		}// End first for-loop
+		console.log(game.state);
 
 		// Draw the screen after updating
 		game.draw();
+		
+		// Check to see if the player has completed a level
+		if(game.state == game.states.IN_GAME) {
+			game.checkSuccess();
+		}
 	};
 
+
+	game.checkSuccess = function(){
+		var gameWon = true;
+		for(var i = 0; i < game.particles.length; i++) {
+			// For the first level, win only if there are no green particles
+			if(game.currentLevel == 2) {
+				if(game.particles[i].type != "catalyst") {
+					gameWon = false;
+				}
+			}
+			
+			// For the second level, win only if there are no green or red particles
+			if(game.currentLevel == 3) {
+				if(game.particles[i].type != "catalyst2") {
+					gameWon = false;
+				}
+			}
+		}
+		
+		if(gameWon == true) {
+			// Clear the particles on-screen and progress to the ENDED_GAME state
+			game.state = game.states.ENDED_GAME;
+			game.particles = [];
+		}
+		return gameWon;
+	}
 
 	/*
 	* Main draw method
@@ -119,15 +151,55 @@ var Catalyst = (function (game){
 		backgroundImage.src = "images/background.jpg";
 		ctx.drawImage(backgroundImage,0,0);
 		
-		// Draw the objective text
-		ctx.save();
+		// Set text properties
 		ctx.font = 'bold 20px Orbitron';
 		ctx.fillStyle = "#818181";
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
-		var objectiveString = "Hello";
-		ctx.fillText(game.levelInformation[0].objectiveText,320,30);
-		ctx.restore();
+		
+		// Display the text for the main menu
+		if(game.state == game.states.MAIN_MENU) {
+			ctx.save();
+			ctx.font = 'bold 40px Orbitron';
+			ctx.fillText("Catalyst", 380, 270);
+			ctx.font = 'bold 20px Orbitron';
+			ctx.fillText("Click to begin continue", 380, 300);
+			ctx.restore();
+		}
+		
+		// Display the text for the instructions menu
+		if(game.state == game.states.INSTRUCTION_MENU) {
+			ctx.save();
+			ctx.fillText("Goal:", 380, 210);
+			ctx.fillText("Create correctly colored mixtures", 380, 240);
+			ctx.fillText("Controls:", 380, 300);
+			ctx.fillText("Left click to drop a red catalyst", 380, 330);
+			ctx.fillText("Middle click to drop a green catalyst", 380, 360);
+			ctx.fillText("Right click to drop a blue catalyst", 380, 390);
+			ctx.restore();
+		}
+		
+		// Draw the objective text
+		if(game.state == game.states.IN_GAME) {
+			ctx.save();
+			ctx.fillText(game.levelInformation[game.currentLevel-2].objectiveText,320,30);
+			ctx.restore();
+		}
+		
+		// Draw the level completed text
+		if(game.state == game.states.ENDED_GAME) {
+			ctx.save();
+			ctx.fillText("You've won! Click to continue", 380, 280);
+			ctx.restore();
+		}
+		
+		// Draw the game is finished text
+		if(game.state == game.states.GAME_FINISHED_MENU) {
+			ctx.save();
+			ctx.fillText("You've completed the game!", 380, 270);
+			ctx.fillText("Thanks for playing", 380, 300);
+			ctx.restore();
+		}
 
 		// TODO: Once more functions and states are complete, clean up this section for readability
 		// Until then, loop through list of particles and draw them
@@ -155,11 +227,13 @@ var Catalyst = (function (game){
 	* Output: none
 	*
 	*/
-	game.reset = function(){
+	game.reset = function() {
 		// Game-state dependent, uses switch statement to start different scenarios
+		
+		/*
 		switch(game.state){
 			case game.states.MAIN_MECHANIC_DEMO:
-			// To begin the demonstration, twenty demo particles are added to the scene
+			// To begin the demonstration, fifty demo particles are added to the scene
 				game.makeParticles("demo", 50, 320, 100, 10);
 				game.update();
 			break;
@@ -167,6 +241,22 @@ var Catalyst = (function (game){
 			// Nothing happens, should always have explicit state
 			break;
 		}
+		*/
+		
+		// Increment the current Level
+		game.currentLevel += 1;
+		
+		if(game.state == game.states.IN_GAME && game.currentLevel == 2) {
+			// To begin the demonstration, fifty demo particles are added to the scene
+			game.makeParticles("demo", 50, 320, 100, 10);
+		}
+		
+		if(game.state == game.states.IN_GAME && game.currentLevel == 3) {
+			// To begin the demonstration, fifty demo particles are added to the scene
+			game.makeParticles("demo", 50, 320, 100, 10);
+		}
+		
+		game.update();
 	}
 
 

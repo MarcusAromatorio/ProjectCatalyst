@@ -7,7 +7,7 @@
 * http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html
 *
 * Version 1.0
-* Author: Marcus Aromatorio
+* Authors: Marcus Aromatorio & Joseph Horsmann 
 *
 */
 
@@ -24,6 +24,10 @@ var Catalyst = (function (game) {
 
 		DEFAULT: 0,
 		MAIN_MENU: 1,
+		INSTRUCTION_MENU: 2,
+		IN_GAME: 3,
+		ENDED_GAME: 4,
+		GAME_FINISHED_MENU: 5,
 		MAIN_MECHANIC_DEMO: -1
 
 	};

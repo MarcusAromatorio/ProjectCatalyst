@@ -5,7 +5,7 @@
 * This script follows the Javascript Module pattern, and adds a variable named "vec2d" to the global scope
 *
 * Version 1.1
-* Author: Marcus Aromatorio
+* Authors: Marcus Aromatorio & Joseph Horsmann 
 */
 
 "use strict";
