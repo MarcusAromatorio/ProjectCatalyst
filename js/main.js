@@ -60,7 +60,7 @@ var Catalyst = (function (game){
 					if(particle.collidingWith(otherParticle)){
 						// Since two particles are colliding, they push each other away by adding force to one another
 						particle.addForce(vec2d.vectorBetween(particle.position, otherParticle.position));
-						otherParticle.addForce(vec2d.vectorBetween(otherParticle.position, particle.position));
+						//otherParticle.addForce(vec2d.vectorBetween(otherParticle.position, particle.position));
 					}
 				}
 			}// End nested for-loop
@@ -74,22 +74,22 @@ var Catalyst = (function (game){
 			// TODO: Clean up this section
 			if(particle.position.x > 640 - particle.radius){
 				particle.setPosition(640 - particle.radius, particle.position.y)
-				particle.addForce(vec2d.newVector(-particle.velocity.x, 0));
-
+				particle.invertX(0.8);
+				
 			}
 			if(particle.position.x < 0 + particle.radius){
 				particle.setPosition(0 + particle.radius, particle.position.y)
-				particle.addForce(vec2d.newVector(-particle.velocity.x, 0));
+				particle.invertX(0.8);
 
 			}
 			if(particle.position.y > 480 - particle.radius){
 				particle.setPosition(particle.position.x, 480 - particle.radius)
-				particle.addForce(vec2d.newVector(0, -particle.velocity.y));
+				particle.invertY(0.8);
 
 			}
 			if(particle.position.y < 0 + particle.radius){
 				particle.setPosition(particle.position.x, 0 + particle.radius);
-				particle.addForce(vec2d.newVector(0, -particle.velocity.y));
+				particle.invertY(0.8);
 
 			}
 		}// End first for-loop

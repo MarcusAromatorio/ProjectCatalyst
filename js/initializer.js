@@ -32,7 +32,7 @@ var Catalyst = (function(){
 		game.canvas = document.querySelector("canvas");
 		game.ctx = game.canvas.getContext("2d");
 
-		game.GRAVITY = vec2d.newVector(0.0, 2.0);
+		game.GRAVITY = vec2d.newVector(0.0, 1.5);
 
 		// After defining game variables, window events and in-game functionalities are connected
 		// window-related and user-input functions are located in the gameEventHandlers script

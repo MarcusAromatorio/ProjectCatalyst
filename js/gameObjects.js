@@ -34,18 +34,18 @@ var Catalyst = (function (game) {
 
 		switch(type){
 			case "catalyst": // The catalyst particle has different properties than default
-				particle.mass = 1.2;
+				particle.mass = 2.2;
 				particle.radius = 3;
 				particle.color = "red";
 			break;
 			case "catalyst2": // The second catalyst particle is large and blue
-				particle.mass = 2.4;
+				particle.mass = 6.4;
 				particle.radius = 7;
 				particle.color = "blue";
 			break;
 			case "demo": // The demonstration chemical is the same as the default
 			default:
-				particle.mass = 1.0;
+				particle.mass = 4.0;
 				particle.radius = 5;
 				particle.color = "green";
 			break;
@@ -78,6 +78,8 @@ var Catalyst = (function (game) {
 		this.setPosition = _setPosition;
 		this.collisionList = [];
 		this.type = type;
+		this.invertY = _invertY;
+		this.invertX = _invertX;
 
 	}
 
@@ -226,7 +228,9 @@ var Catalyst = (function (game) {
 	*
 	*/
 	function _updateParticle(dt){
-		this.position.add(this.velocity);
+		var tempVelocity = vec2d.newVector(this.velocity.x, this.velocity.y);
+		tempVelocity.scale(0.1);
+		this.position.add(tempVelocity);
 		this.velocity.add(this.acceleration);
 		this.acceleration.x = 0;
 		this.acceleration.y = 0;
@@ -247,6 +251,16 @@ var Catalyst = (function (game) {
 	function _setPosition(x, y){
 		this.position.x = x;
 		this.position.y = y;
+	}
+
+	function _invertY(damp){
+		this.velocity.y *= (-1 * damp);
+
+	}
+
+	function _invertX(damp){
+		this.velocity.x *= (-1 * damp);
+
 	}
 
 	// Returning the augmented game object back to the global scope to allow further augmentations
