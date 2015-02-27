@@ -88,6 +88,13 @@ var Catalyst = (function (game) {
 			}
 			return;
 		}
+
+		// If the game is over, reset the level and start from the main menu
+		if(game.state == game.states.GAME_FINISHED_MENU){
+			game.currentLevel = 0;
+			game.state = game.states.MAIN_MENU;
+			game.reset();
+		}
 	}
 
 

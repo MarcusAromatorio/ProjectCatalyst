@@ -5,7 +5,7 @@
 *
 * http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html
 *
-* Version 1.0
+* Version 1.5
 * Authors: Marcus Aromatorio & Joseph Horsmann 
 *
 */
@@ -93,7 +93,6 @@ var Catalyst = (function (game){
 
 			}
 		}// End first for-loop
-		console.log(game.state);
 
 		// Draw the screen after updating
 		game.draw();
@@ -126,7 +125,6 @@ var Catalyst = (function (game){
 		if(gameWon == true) {
 			// Clear the particles on-screen and progress to the ENDED_GAME state
 			game.state = game.states.ENDED_GAME;
-			game.particles = [];
 		}
 		return gameWon;
 	}
@@ -163,7 +161,7 @@ var Catalyst = (function (game){
 			ctx.font = 'bold 40px Orbitron';
 			ctx.fillText("Catalyst", 380, 270);
 			ctx.font = 'bold 20px Orbitron';
-			ctx.fillText("Click to begin continue", 380, 300);
+			ctx.fillText("Click to begin", 380, 300);
 			ctx.restore();
 		}
 		
@@ -211,6 +209,11 @@ var Catalyst = (function (game){
 			ctx.fillStyle = particle.color;
 			ctx.beginPath();
 			ctx.arc(particle.position.x, particle.position.y, particle.radius, 0, 2 * Math.PI);
+
+			// If the game is in an ended state, draw the particles with 50% opacity to indicate a change
+			if(game.state == game.states.ENDED_GAME || game.state == game.states.GAME_FINISHED_MENU)
+				ctx.globalAlpha = 0.5;
+
 			ctx.fill();
 
 			ctx.restore();
@@ -229,50 +232,25 @@ var Catalyst = (function (game){
 	*/
 	game.reset = function() {
 		// Game-state dependent, uses switch statement to start different scenarios
-		
-		/*
-		switch(game.state){
-			case game.states.MAIN_MECHANIC_DEMO:
-			// To begin the demonstration, fifty demo particles are added to the scene
-				game.makeParticles("demo", 50, 320, 100, 10);
-				game.update();
-			break;
-			default:
-			// Nothing happens, should always have explicit state
-			break;
-		}
-		*/
+
+		// Clear the particles on screen
+		game.particles = [];
 		
 		// Increment the current Level
 		game.currentLevel += 1;
 		
 		if(game.state == game.states.IN_GAME && game.currentLevel == 2) {
 			// To begin the demonstration, fifty demo particles are added to the scene
-			game.makeParticles("demo", 50, 320, 100, 10);
+			game.makeParticles("demo", 50, 320, 250, 10);
 		}
 		
 		if(game.state == game.states.IN_GAME && game.currentLevel == 3) {
 			// To begin the demonstration, fifty demo particles are added to the scene
-			game.makeParticles("demo", 50, 320, 100, 10);
+			game.makeParticles("demo", 50, 320, 250, 10);
 		}
-		
 		game.update();
 	}
 
-
-	/*
-	* Method to drop the catalyst
-	*
-	* Requires: "In-game"
-	* Inputs: X and Y coordinates
-	* Process: add a catalyst on screen to drop at the point specified
-	* Output: none
-	*
-	*/
-	game.dropCatalyst = function(x, y){
-
-
-	};
 
 	/*
 	* Calculate how many miliseconds are occurring between frames
