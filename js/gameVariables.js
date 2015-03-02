@@ -6,7 +6,7 @@
 *
 * http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html
 *
-* Version 1.0
+* Version 1.2
 * Authors: Marcus Aromatorio & Joseph Horsmann 
 */
 
@@ -19,6 +19,7 @@ var Catalyst = (function (game){
 	game.state;
 	game.activeButtons = [];
 	game.particles = [];
+	game.containers = [];
 	game.keydown = [];
 	game.canvas;
 	game.ctx;
