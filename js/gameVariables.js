@@ -27,7 +27,10 @@ var Catalyst = (function (game){
 	game.lastTime;
 	game.paused = false;
 	game.currentLevel = 0;
-
+	game.timer = 10;
+	game.timerString;
+	game.timerSubstring;
+	game.timerInterval;
 
 	// Returning the augmented game object back to the global scope to allow further augmentations
 	return game;

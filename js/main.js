@@ -93,6 +93,10 @@ var Catalyst = (function (game){
 
 			}
 		}// End first for-loop
+		
+		// Update strings for timer display, gets around floating point accuracy problems
+		game.timerString = game.timer.toString();
+		game.timerSubstring = game.timerString.substring(0,4);
 
 		// Draw the screen after updating
 		game.draw();
@@ -100,6 +104,17 @@ var Catalyst = (function (game){
 		// Check to see if the player has completed a level
 		if(game.state == game.states.IN_GAME) {
 			game.checkSuccess();
+		}
+		
+		// Check to see if the player has failed a level
+		if(game.timer <= 0) {
+			game.state = game.states.LEVEL_FAILED;
+			game.timer = 0;
+		}
+		
+		// Pause the timer if the game state is not IN_GAME
+		if(game.state != game.states.IN_GAME) {
+			clearInterval(game.timerInterval);
 		}
 	};
 
@@ -126,6 +141,7 @@ var Catalyst = (function (game){
 			// Clear the particles on-screen and progress to the ENDED_GAME state
 			game.state = game.states.ENDED_GAME;
 		}
+		
 		return gameWon;
 	}
 
@@ -154,6 +170,21 @@ var Catalyst = (function (game){
 		ctx.fillStyle = "#818181";
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
+		
+		// Draw the timer
+		ctx.save();
+		ctx.fillText("Time",60,150);
+		ctx.fillText("Left:",60,180);
+		if(game.timerSubstring == 10) {
+			ctx.fillText(game.timerSubstring+".00",60,210);
+		}
+		else if(game.timerSubstring == 0) {
+			ctx.fillText(game.timerSubstring+".00",60,210);
+		}
+		else {
+			ctx.fillText(game.timerSubstring,60,210);
+		}
+		ctx.restore();
 		
 		// Display the text for the main menu
 		if(game.state == game.states.MAIN_MENU) {
@@ -196,6 +227,14 @@ var Catalyst = (function (game){
 			ctx.save();
 			ctx.fillText("You've completed the game!", 380, 270);
 			ctx.fillText("Thanks for playing", 380, 300);
+			ctx.restore();
+		}
+		
+		// Draw the level failed text
+		if(game.state == game.states.LEVEL_FAILED) {
+			ctx.save();
+			ctx.fillText("You failed", 380, 270);
+			ctx.fillText("Click to try again", 380, 300);
 			ctx.restore();
 		}
 
@@ -248,6 +287,11 @@ var Catalyst = (function (game){
 			// To begin the demonstration, fifty demo particles are added to the scene
 			game.makeParticles("demo", 50, 320, 250, 10);
 		}
+		
+		if(game.state == game.states.IN_GAME) {
+			game.timerInterval = setInterval(function(){game.timer -= 0.01},10);
+		}
+		
 		game.update();
 	}
 

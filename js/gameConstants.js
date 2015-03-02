@@ -28,6 +28,7 @@ var Catalyst = (function (game) {
 		IN_GAME: 3,
 		ENDED_GAME: 4,
 		GAME_FINISHED_MENU: 5,
+		LEVEL_FAILED: 6,
 		MAIN_MECHANIC_DEMO: -1
 
 	};

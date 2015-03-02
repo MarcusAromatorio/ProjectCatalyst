@@ -80,6 +80,7 @@ var Catalyst = (function (game) {
 		// When the player clicks on the level end screen, progress to the next level
 		if(game.state == game.states.ENDED_GAME) {
 			if(game.currentLevel <= 2) {
+				game.timer = 10;
 				game.state = game.states.IN_GAME;
 				game.reset();
 			}
@@ -92,8 +93,19 @@ var Catalyst = (function (game) {
 		// If the game is over, reset the level and start from the main menu
 		if(game.state == game.states.GAME_FINISHED_MENU){
 			game.currentLevel = 0;
+			game.timer = 10;
 			game.state = game.states.MAIN_MENU;
 			game.reset();
+		}
+		
+		// Restart the level if the player clicks on the fail screen
+		if(game.state == game.states.LEVEL_FAILED) {
+			game.state = game.states.IN_GAME;
+			game.timer = 10;
+			game.particles = [];
+			game.currentLevel -= 1;
+			game.reset();
+			return;
 		}
 	}
 
