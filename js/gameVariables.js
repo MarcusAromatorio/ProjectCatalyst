@@ -19,7 +19,6 @@ var Catalyst = (function (game){
 	game.state;
 	game.activeButtons = [];
 	game.particles = [];
-	game.containers = [];
 	game.keydown = [];
 	game.canvas;
 	game.ctx;

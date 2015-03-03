@@ -69,9 +69,6 @@ var Catalyst = (function (game){
 			// Every particle is affected by gravity
 			particle.addForce(game.GRAVITY);
 
-			// Check if the particle is colliding against any container
-			game.collideContainer(particle);
-
 			// Each particle stays within the canvas screen
 			if(particle.position.x > 640 - particle.radius){
 				particle.setPosition(640 - particle.radius, particle.position.y);
@@ -117,152 +114,7 @@ var Catalyst = (function (game){
 		if(game.state != game.states.IN_GAME) {
 			clearInterval(game.timerInterval);
 		}
-	};
-
-	/*
-	*
-	* Function to calculate whether a particle collides with a container
-	*
-	* Requires: none
-	* Input: particle object
-	* Process: If the particle is within the bounds of either of the three walls of the container, reverse its respective velocity
-	* Output: none
-	*
-	*/
-	game.collideContainer = function(particle){
-
-		// If the containers array is empty, exit early as no collsion needs to be calculated
-		if(game.containers.length == 0)
-			return;
-
-		// The particle must be overlapping (radius of particle and bounding box) to collide
-		// Take reference variables of particle properties for ease of coding
-		var position = particle.position;
-		var radius = particle.radius;
-
-		// Loop through each container in the array and check against the position of the particle
-		for(var i = 0; i < game.containers.length; i++){
-
-			// Temporary variable to the specific container
-			var container = game.containers[i];
-
-			// Each container has an array of its walls, called blocks
-			// Each block is just a rectangle, and can have its collision calculated separately
-			// Each block has x, y, width, and height properties
-
-			for(var j = 0; j < container.blocks.length; j++){
-				// Temporary variables for ease of collision calculation
-				var block = container.blocks[j];
-				var halfX = block.x + block.width / 2;
-				var halfY = block.y + block.height / 2;
-
-				// These boolean variables describe the left/right and above/below position of the particle
-				// Either of these being false implies the opposite is true (to the right and below)
-				var toLeft = (position.x < halfX);
-				var above = (position.y < halfY);
-
-				// Variables to hold the value of whether the particle is colliding on any of the four sides of the block
-				var leftOverlap = (position.x + radius > block.x && toLeft);
-				var aboveOverlap = (position.y + radius < block.y && above);
-				var belowOverlap = (position.y - radius > block.y + block.height && !above);
-				var rightOverlap = (position.x - radius < block.x + block.width && !toLeft);
-
-				if(leftOverlap && rightOverlap && belowOverlap && aboveOverlap){
-
-					if(leftOverlap){
-						particle.setPosition(block.x - radius, position.y);
-						particle.invertX(0.8);
-					}
-					if(rightOverlap){
-						particle.setPosition(block.x + block.width + radius, position.y);
-						particle.invertX(0.8);
-					}
-					if(aboveOverlap){
-						particle.setPosition(position.x, block.y + radius);
-						particle.invertY(0.8);
-					}
-					if(belowOverlap){
-						particle.setPosition(position.x, block.y + block.height + radius);
-						particle.invertY(0.8);
-					}
-				}
-			}
-		}
 	}
-
-/*****
-			// Only consider collision if the particle is within range of touching the container
-			// These four boolean variables are to check if the particle is touching the outside edges of the container
-			var hitOutsideLeft = position.x + radius > container.x;
-			var hitOutsideRight = position.x - radius < container.x + container.width;
-			var hitOutsideBottom = position.y - radius < container.y + container.height;
-			var hitOutsideTop = position.y + radius > container.y;
-
-			// If ALL four conditions are true, the particle is colliding somewhere with the container
-			if(hitOutsideLeft && hitOutsideRight && hitOutsideBottom && hitOutsideTop){
-
-				// Within this block, the particle position (considered with the radius of the particle as "padding") is within the container
-				// An extra case where collisiondoes not happen is the open space insde, test for it here
-				// If the following test fails, there is still no collision, and the loop ends and iterates
-
-				// To save time and prevent double-calculation, store booleans in temporary variables
-				var hitInsideLeft = (position.x - radius < container.x + container.thickness);
-				var hitInsideRight = (position.x + radius > container.x + container.width - container.thickness);
-				var hitInsideBottom = (position.y + radius > container.y + container.height - container.thickness);
-
-				// If any variable is true, the particle is repositioned and inverted in orthogonal velocity
-
-				// If ALL variables are false, the particle is somewhere outside the container and hitting one of the outer edges
-				if(!hitInsideLeft && !hitInsideRight && !hitInsideBottom){
-					// See if the particle is hitting the left wall
-					if(particle.x < container.x + container.thickness &&
-						particle.y > container.y &&
-						particle.y < container.y + container.height){
-						// This three conditional statement makes sure the particle is within the left side and not the bottom or top
-						particle.setPosition(container.x - radius, position.y);
-						particle.invertX(0.8);
-					}
-					else if(particle.x > container.x + container.width &&
-							particle.y > container.y &&
-							particle.y < container.y + container.height){
-						// This checks to make sure the particle is outside and to the right
-						particle.setPosition(container.x + container.width, position.y);
-						particle.invertX(0.8);
-					}
-					else{
-						// Otherwise, the particle is colliding with either the top or bottom
-						// A smaller check is viable - height compared against half-height of container
-						if(particle.y > container.y + container.height / 2){
-							particle.setPosition(position.x, container.y + container.height);
-							particle.invertY(0.8);
-						}
-						else{
-							// The particle is colliding with either top sides (left or right is irrelevant, they have the same response)
-							particle.setPosition(position.x, container.y);
-							particle.invertY(0.8);
-						}
-					}
-				}
-				else{
-					// Here is where the particle is checked for internal collisions on the container
-					if(hitInsideLeft){
-						particle.setPosition(container.x + container.thickness, position.y);
-						particle.invertX(0.8);
-					}
-
-					if(hitInsideRight){
-						particle.setPosition(container.x + container.width - container.thickness, position.y);
-						particle.invertX(0.8);
-					}
-
-					if(hitInsideBottom){
-						particle.setPosition(position.x, container.y + container.height - container.thickness);
-						particle.invertY(0.8);
-					}
-				}
-			}
-		}
-	}*/
 
 
 	game.checkSuccess = function(){
@@ -404,19 +256,6 @@ var Catalyst = (function (game){
 			ctx.restore();
 		}
 
-		for(var j = 0; j < game.containers.length; j++){
-			ctx.save();
-
-			var container = game.containers[j];
-			ctx.fillStyle = "black";
-
-			for(var q = 0; q < container.blocks.length; q++){
-				var block = container.blocks[q];
-				ctx.fillRect(block.x, block.y, block.width, block.height);
-			}
-
-			ctx.restore();
-		}
 	}
 
 	/*
@@ -444,8 +283,7 @@ var Catalyst = (function (game){
 		
 		if(game.state == game.states.IN_GAME && game.currentLevel == 3) {
 			// To begin the demonstration, fifty demo particles are added to the scene
-			game.makeParticles("demo", 50, 320, 250, 10);
-			game.makeContainer(280, 400, 30, 60);
+			game.makeParticles("demo", 40, 210, 250, 6);
 		}
 		
 		if(game.state == game.states.IN_GAME) {
