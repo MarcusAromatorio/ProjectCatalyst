@@ -67,7 +67,7 @@ var Catalyst = (function (game){
 			particle.checkReaction();
 
 			// Every particle is affected by gravity
-			particle.addForce(game.GRAVITY);
+			particle.addGravity(game.GRAVITY);
 
 			// Each particle stays within the canvas screen
 			if(particle.position.x > 640 - particle.radius){
@@ -290,6 +290,7 @@ var Catalyst = (function (game){
 			game.timerInterval = setInterval(function(){game.timer -= 0.01},10);
 		}
 		
+		cancelAnimationFrame(game.animationID);
 		game.update();
 	}
 

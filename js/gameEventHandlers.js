@@ -72,7 +72,7 @@ var Catalyst = (function (game) {
 			if(e.button == 0)
 				game.makeParticle("catalyst", mouse.x, mouse.y);
 			else if(e.button == 1)
-				game.makeParticle("demo", mouse.x, mouse.y);
+				game.makeParticle("oxygen", mouse.x, mouse.y);
 			else if(e.button == 2)
 				game.makeParticle("catalyst2", mouse.x, mouse.y);
 		}

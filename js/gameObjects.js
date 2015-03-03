@@ -37,17 +37,26 @@ var Catalyst = (function (game) {
 				particle.mass = 2.2;
 				particle.radius = 3;
 				particle.color = "red";
+				particle.density = 1.45;
 			break;
 			case "catalyst2": // The second catalyst particle is large and blue
 				particle.mass = 6.4;
 				particle.radius = 7;
 				particle.color = "blue";
+				particle.density = 0.65;
+			break;
+			case "oxygen":
+				particle.mass = 0.5;
+				particle.radius = 10;
+				particle.color = "honeydew" // Very white-ish color
+				particle.density = 0.1;
 			break;
 			case "demo": // The demonstration chemical is the same as the default
 			default:
 				particle.mass = 4.0;
 				particle.radius = 5;
 				particle.color = "green";
+				particle.density = 1.0;
 			break;
 		}
 
@@ -66,11 +75,13 @@ var Catalyst = (function (game) {
 		this.mass = 0.0;
 		this.radius = 5;
 		this.color = "green"
+		this.density = 0.0;
 
 		this.position = vec2d.newVector(x, y);
 		this.velocity = vec2d.newVector(0, 0);
 		this.acceleration = vec2d.newVector(0,0);
 		this.addForce = _addForce;
+		this.addGravity = _addGravity;
 		this.update = _updateParticle;
 		this.collidingWith = _collidingWith;
 		this.addForce = _addForce;
@@ -159,6 +170,7 @@ var Catalyst = (function (game) {
 		// First loop through collisionList and see if a catalyst has collided with the particle
 		// Temporary variable to track if a reaction will occur
 		var shouldReact = false;
+		var alternateReaction = false;
 
 		// Check the list of collided particles for specific types
 		for(var i = 0; i < this.collisionList.length; i++){
@@ -168,6 +180,10 @@ var Catalyst = (function (game) {
 				shouldReact = true;
 			else if(this.collisionList[i].type == "demo" && this.type == "catalyst2")
 				shouldReact = true;
+			else if(this.collisionList[i].type == "oxygen" && this.type == "catalyst2"){
+				shouldReact = true;
+				alternateReaction = true;
+			}
 		}// End for-loop
 
 		// Should the particle react? if not, exit early
@@ -181,16 +197,31 @@ var Catalyst = (function (game) {
 				this.type = "catalyst";
 				this.color = "red";
 				this.radius = 3;
+				this.mass = 2.1;
+				this.density = 1.25;
 			break;
 			case "catalyst":
 				this.type = "catalyst2";
+				this.mass = 6.4;
 				this.color = "blue";
 				this.radius = 7;
+				this.density = 0.85;
 			break;
 			case "catalyst2":
-				this.type = "demo";
-				this.color = "green";
-				this.radius = 5;
+				if(alternateReaction){
+					this.type = "oxygen";
+					this.mass = 0.5;
+					this.radius = 10;
+					this.color = "honeydew" // Very white-ish color
+					this.density = 0.1;
+				}
+				else{
+					this.type = "demo";
+					this.mass = 1.0;
+					this.radius = 5;
+					this.color = "green";
+					this.density = 1.0;
+				}
 			break;
 			default:
 				// Catalysts and default-type particles do nothing on their own & this block should not execute
@@ -219,6 +250,25 @@ var Catalyst = (function (game) {
 	}
 
 	/*
+	* Special-case Method added to particle objects that alter their acceleration by a force of gravity
+	*
+	* Requires: Vector2d
+	* Inputs: vector force
+	* Process: Gravity is only added after altering the effect by the particle's density
+	* Output: none
+	*
+	*/
+	function _addGravity(force){
+		// Scale the force by the particle's density (not exactly realistic density, but for our effect it works)
+		var tempVector = vec2d.newVector(force.x, force.y);
+
+		tempVector.scale(this.density);
+
+		// Add the force
+		this.addForce(tempVector);
+	}
+
+	/*
 	* Updates the particle that behaves as a kinematic object
 	*
 	* Requires: Vector2d
@@ -229,7 +279,7 @@ var Catalyst = (function (game) {
 	*/
 	function _updateParticle(dt){
 		var tempVelocity = vec2d.newVector(this.velocity.x, this.velocity.y);
-		tempVelocity.scale(0.1);
+		tempVelocity.scale(0.5);
 		this.position.add(tempVelocity);
 		this.velocity.add(this.acceleration);
 		this.acceleration.x = 0;
@@ -253,11 +303,29 @@ var Catalyst = (function (game) {
 		this.position.y = y;
 	}
 
+	/*
+	* Inverts the particle's Y velocity component
+	*
+	* Requires: none
+	* Inputs: damping ratio
+	* Process: flip the Y velocity's sign, after scaling by the damping ratio
+	* Output: none
+	*
+	*/
 	function _invertY(damp){
 		this.velocity.y *= (-1 * damp);
 
 	}
 
+	/*
+	* Inverts the particle's X velocity component
+	*
+	* Requires: none
+	* Inputs: damping ratio
+	* Process: flip the X velocity's sign, after scaling by the damping ratio
+	* Output: none
+	*
+	*/
 	function _invertX(damp){
 		this.velocity.x *= (-1 * damp);
 
