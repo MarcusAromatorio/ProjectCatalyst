@@ -128,7 +128,31 @@ var Catalyst = (function (game){
 			
 			// For the second level, win only if there are no green or red particles
 			if(game.currentLevel == 3) {
+				if(game.particles[i].type != "demo") {
+					gameWon = false;
+				}
+			}
+			
+			if(game.currentLevel == 4) {
 				if(game.particles[i].type != "catalyst2") {
+					gameWon = false;
+				}
+			}
+			
+			if(game.currentLevel == 5) {
+				if(game.particles[i].type != "catalyst2") {
+					gameWon = false;
+				}
+			}
+			
+			if(game.currentLevel == 6) {
+				if(game.particles[i].type != "catalyst") {
+					gameWon = false;
+				}
+			}
+			
+			if(game.currentLevel == 7) {
+				if(game.particles[i].type != "demo") {
 					gameWon = false;
 				}
 			}
@@ -150,13 +174,13 @@ var Catalyst = (function (game){
 				game.levelInformation[game.currentLevel-2].highScores.sort(function(a,b){return b-a});
 				
 				// Splice the high scores arrays, so that there are only 5 in each
-				for (var i = 0; i < 2; i++) {
+				for (var i = 0; i < 6; i++) {
 					game.levelInformation[i].highScores = game.levelInformation[i].highScores.splice(0,5);
 				}
 				
 				// Clear the scores Array and re-populate it with the 5 high scores from each level
 				game.scoresArray = [];
-				for (var i = 0; i < 2; i++) {
+				for (var i = 0; i < 6; i++) {
 					game.scoresArray.push(game.levelInformation[i].highScores);
 				}
 			
@@ -452,7 +476,27 @@ var Catalyst = (function (game){
 		
 		if(game.state == game.states.IN_GAME && game.currentLevel == 3) {
 			// To begin the demonstration, fifty demo particles are added to the scene
+			game.makeParticles("catalyst2", 40, 210, 250, 6);
+		}
+		
+		if(game.state == game.states.IN_GAME && game.currentLevel == 4) {
+			// To begin the demonstration, fifty demo particles are added to the scene
+			game.makeParticles("catalyst", 40, 210, 250, 6);
+		}
+		
+		if(game.state == game.states.IN_GAME && game.currentLevel == 5) {
+			// To begin the demonstration, fifty demo particles are added to the scene
 			game.makeParticles("demo", 40, 210, 250, 6);
+		}
+		
+		if(game.state == game.states.IN_GAME && game.currentLevel == 6) {
+			// To begin the demonstration, fifty demo particles are added to the scene
+			game.makeParticles("demo", 40, 210, 250, 6);
+		}
+		
+		if(game.state == game.states.IN_GAME && game.currentLevel == 7) {
+			// To begin the demonstration, fifty demo particles are added to the scene
+			game.makeParticles("catalyst", 40, 210, 250, 6);
 		}
 		
 		cancelAnimationFrame(game.animationID);

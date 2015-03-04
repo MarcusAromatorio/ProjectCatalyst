@@ -62,7 +62,7 @@ var Catalyst = (function(){
 		// Load the high scores saved to local storage
 		game.scoresArray = JSON.parse(localStorage.getItem('savedScores'));
 		if(game.scoresArray != null) {
-			for (var i = 0; i < 2; i++) {
+			for (var i = 0; i < 6; i++) {
 				game.levelInformation[i].highScores = game.scoresArray[i];
 			}
 		}
