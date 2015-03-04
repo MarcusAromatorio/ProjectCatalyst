@@ -68,8 +68,8 @@ var Catalyst = (function (game){
 				particle.invertX(0.8);
 				
 			}
-			if(particle.position.x < 0 + particle.radius){
-				particle.setPosition(0 + particle.radius, particle.position.y);
+			if(particle.position.x < 120 + particle.radius){
+				particle.setPosition(120 + particle.radius, particle.position.y);
 				particle.invertX(0.8);
 
 			}
@@ -78,8 +78,8 @@ var Catalyst = (function (game){
 				particle.invertY(0.8);
 
 			}
-			if(particle.position.y < 0 + particle.radius){
-				particle.setPosition(particle.position.x, 0 + particle.radius);
+			if(particle.position.y < 95 + particle.radius){
+				particle.setPosition(particle.position.x, 95 + particle.radius);
 				particle.invertY(0.8);
 
 			}
