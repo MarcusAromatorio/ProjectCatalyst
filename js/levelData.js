@@ -22,6 +22,16 @@ var Catalyst = (function (game){
 		{ objectiveText: "Level 5 - Create a red mixture", highScores: [1,1,1,1,1] },
 		{ objectiveText: "Level 6 - Create a green mixture", highScores: [1,1,1,1,1] }
 	];
+
+	// Array denoting the level-specific number of clicks allowed
+	// This array is used in conjunction with game.roundClicks, initialized in gameVariables.js
+	game.allowedClicks = [
+		3, // LEVEL 1
+		3, // LEVEL 2
+		3, // LEVEL 3
+		3, // LEVEL 4
+		3  // LEVEL 5
+	];
 			
 	// Returning the augmented game object back to the global scope to allow further augmentations
 	return game;
