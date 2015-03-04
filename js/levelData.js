@@ -26,12 +26,12 @@ var Catalyst = (function (game){
 	// Array denoting the level-specific number of clicks allowed
 	// This array is used in conjunction with game.roundClicks, initialized in gameVariables.js
 	game.allowedClicks = [
-		2, // LEVEL 1 //Change to 3
-		1, // LEVEL 2 //Change to 2
-		0, // LEVEL 3 //Change to 1
-		1, // LEVEL 4 //Change to 2
-		3, // LEVEL 5 //Change to 4
-		1  // LEVEL 6 //Change to 2
+		2, // LEVEL 1 - 3 clicks
+		1, // LEVEL 2 - 2 clicks
+		0, // LEVEL 3 - 1 click
+		1, // LEVEL 4 - 2 clicks
+		0, // LEVEL 5 - 1 clicks
+		1  // LEVEL 6 - 2 clicks
 	];
 			
 	// Returning the augmented game object back to the global scope to allow further augmentations
