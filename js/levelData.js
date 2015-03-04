@@ -15,12 +15,12 @@ var Catalyst = (function (game){
 	
 	// Array of level data objects
 	game.levelInformation = [
-		{ objectiveText: "Level 1 - Create a red mixture", highScores: [1,1,1,1,1] },
-		{ objectiveText: "Level 2 - Create a green mixture", highScores: [1,1,1,1,1] },
-		{ objectiveText: "Level 3 - Create a blue mixture", highScores: [1,1,1,1,1] },
-		{ objectiveText: "Level 4 - Create a blue mixture", highScores: [1,1,1,1,1] },
-		{ objectiveText: "Level 5 - Create a red mixture", highScores: [1,1,1,1,1] },
-		{ objectiveText: "Level 6 - Create a green mixture", highScores: [1,1,1,1,1] }
+		{ objectiveText: "Level 1 - Turn all particles red", highScores: [1,1,1,1,1] },
+		{ objectiveText: "Level 2 - Turn all particles green", highScores: [1,1,1,1,1] },
+		{ objectiveText: "Level 3 - Turn all particles blue", highScores: [1,1,1,1,1] },
+		{ objectiveText: "Level 4 - Turn all particles blue", highScores: [1,1,1,1,1] },
+		{ objectiveText: "Level 5 - Turn all particles red", highScores: [1,1,1,1,1] },
+		{ objectiveText: "Level 6 - Turn all particles green", highScores: [1,1,1,1,1] }
 	];
 
 	// Array denoting the level-specific number of clicks allowed

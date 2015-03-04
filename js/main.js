@@ -306,22 +306,19 @@ var Catalyst = (function (game){
 		// Display the text for the main menu
 		if(game.state == game.states.MAIN_MENU) {
 			ctx.save();
-			ctx.font = 'bold 40px Orbitron';
+			ctx.font = 'bold 100px Orbitron';
 			ctx.fillText("Catalyst", 380, 270);
 			ctx.font = 'bold 20px Orbitron';
-			ctx.fillText("Click to begin", 380, 310);
+			ctx.fillText("Click to begin", 380, 350);
 			ctx.restore();
 		}
 		
 		// Display the text for the instructions menu
 		if(game.state == game.states.INSTRUCTION_MENU) {
 			ctx.save();
-			ctx.fillText("Goal:", 380, 210);
-			ctx.fillText("Create correctly colored mixtures", 380, 240);
-			ctx.fillText("Controls:", 380, 300);
-			ctx.fillText("Left click to drop a red catalyst", 380, 330);
-			ctx.fillText("Middle click to drop a green catalyst", 380, 360);
-			ctx.fillText("Right click to drop a blue catalyst", 380, 390);
+			ctx.fillText("Create correctly colored mixtures", 380, 225);
+			ctx.fillText("Switch between particles with 1, 2, 3 and 4", 380, 285);
+			ctx.fillText("Left click to drop a particle", 380, 345);
 			ctx.restore();
 		}
 		
@@ -329,7 +326,7 @@ var Catalyst = (function (game){
 		if(game.state == game.states.IN_GAME) {
 			ctx.save();
 			if(game.paused)
-				ctx.fillText("Click the mouse to start the round", 320, 150);
+				ctx.fillText("Click the mouse to start the round", 380, 120);
 			ctx.fillText(game.levelInformation[game.currentLevel-2].objectiveText,320,30);
 			ctx.restore();
 		}
@@ -337,18 +334,18 @@ var Catalyst = (function (game){
 		// Draw the level completed text and high scores
 		if(game.state == game.states.ENDED_GAME) {
 			ctx.save();
-			ctx.fillText("You've won! Click to continue", 380, 280);
-			ctx.fillText("High Scores For This Level:", 380, 310);
+			ctx.fillText("You've won! Click to continue", 380, 210);
+			ctx.fillText("High Scores For This Level:", 380, 240);
 			
 			for (i = 0; i < 5; i++) {
 				if(game.levelInformation[game.currentLevel-2].highScores[i] == 1){
-					ctx.fillText("#"+ (i+1) +" - 1.00", 380, 340+(i*30));
+					ctx.fillText("#"+ (i+1) +" - 1.00", 380, 270+(i*30));
 				}
 				else {
 					// Update strings for score display, gets around floating point accuracy problems
 					game.scoreString = game.levelInformation[game.currentLevel-2].highScores[i].toString();
 					game.scoreSubstring = game.scoreString.substring(0,4);
-					ctx.fillText("#"+ (i+1) +" - "+ game.scoreSubstring, 380, 340+(i*30));
+					ctx.fillText("#"+ (i+1) +" - "+ game.scoreSubstring, 380, 270+(i*30));
 				}
 			}
 			
