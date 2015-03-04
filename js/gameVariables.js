@@ -40,6 +40,10 @@ var Catalyst = (function (game){
 	game.soundEffect;
 	game.currentEffect = 0;
 	game.loseAudio;
+	game.pressed1 = false;
+	game.pressed2 = false;
+	game.pressed3 = false;
+	game.pressed4 = false;
 
 	// Returning the augmented game object back to the global scope to allow further augmentations
 	return game;

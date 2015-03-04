@@ -40,7 +40,11 @@ var Catalyst = (function (game) {
 		"KEY_RIGHT": 39,
 		"KEY_DOWN": 40,
 		"KEY_SPACE": 32,
-		"KEY_P":80
+		"KEY_P":80,
+		"KEY_1":49,
+		"KEY_2":50,
+		"KEY_3":51,
+		"KEY_4":52
 	};
 
 	// Requires: Vector2d

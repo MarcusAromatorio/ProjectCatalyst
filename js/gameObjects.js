@@ -48,7 +48,7 @@ var Catalyst = (function (game) {
 			case "oxygen":
 				particle.mass = 0.5;
 				particle.radius = 10;
-				particle.color = "honeydew" // Very white-ish color
+				particle.color = "purple";
 				particle.density = 0.1;
 			break;
 			case "demo": // The demonstration chemical is the same as the default

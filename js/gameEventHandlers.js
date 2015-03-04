@@ -69,12 +69,23 @@ var Catalyst = (function (game) {
 		if(game.state == game.states.IN_GAME) {
 			// The player is clicking inside the demonstration of the main mechanic
 			// All that needs to be done is to drop the catalyst from the mouse location
-			if(e.button == 0)
-				game.makeParticle("catalyst", mouse.x, mouse.y);
-			else if(e.button == 1)
-				game.makeParticle("oxygen", mouse.x, mouse.y);
-			else if(e.button == 2)
-				game.makeParticle("catalyst2", mouse.x, mouse.y);
+			if(e.button == 0) {
+				if(game.pressed1 == true) {
+					game.makeParticle("catalyst", mouse.x, mouse.y);
+				}
+				else if(game.pressed2 == true) {
+					game.makeParticle("catalyst2", mouse.x, mouse.y);
+				}
+				else if(game.pressed3 == true) {
+					game.makeParticle("demo", mouse.x, mouse.y);
+				}
+				else if(game.pressed4 == true) {
+					game.makeParticle("oxygen", mouse.x, mouse.y);
+				}
+				else {
+					game.makeParticle("demo", mouse.x, mouse.y);
+				}
+			}
 		}
 		
 		// When the player clicks on the level end screen, progress to the next level

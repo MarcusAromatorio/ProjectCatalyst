@@ -120,6 +120,35 @@ var Catalyst = (function (game){
 		if(game.state != game.states.IN_GAME) {
 			clearInterval(game.timerInterval);
 		}
+		
+		// Change the pressed variables as the player selects particles
+		if(game.keydown[game.KEYBOARD["KEY_1"]]) {
+			game.pressed1 = true;
+			game.pressed2 = false;
+			game.pressed3 = false;
+			game.pressed4 = false;
+		}
+		
+		if(game.keydown[game.KEYBOARD["KEY_2"]]) {
+			game.pressed1 = false;
+			game.pressed2 = true;
+			game.pressed3 = false;
+			game.pressed4 = false;
+		}
+		
+		if(game.keydown[game.KEYBOARD["KEY_3"]]) {
+			game.pressed1 = false;
+			game.pressed2 = false;
+			game.pressed3 = true;
+			game.pressed4 = false;
+		}
+		
+		if(game.keydown[game.KEYBOARD["KEY_4"]]) {
+			game.pressed1 = false;
+			game.pressed2 = false;
+			game.pressed3 = false;
+			game.pressed4 = true;
+		}
 	}
 
 
@@ -224,16 +253,16 @@ var Catalyst = (function (game){
 		
 		// Draw the timer
 		ctx.save();
-		ctx.fillText("Time",60,150);
-		ctx.fillText("Left:",60,180);
+		ctx.textAlign = "left";
+		ctx.fillText("Time:",28,120);
 		if(game.timerSubstring == 10) {
-			ctx.fillText(game.timerSubstring+".00",60,210);
+			ctx.fillText(game.timerSubstring+".00",26,150);
 		}
 		else if(game.timerSubstring == 0) {
-			ctx.fillText(game.timerSubstring+".00",60,210);
+			ctx.fillText(game.timerSubstring+".00",30,150);
 		}
 		else {
-			ctx.fillText(game.timerSubstring,60,210);
+			ctx.fillText(game.timerSubstring,30,150);
 		}
 		ctx.restore();
 		
@@ -301,6 +330,68 @@ var Catalyst = (function (game){
 			ctx.fillText("You failed", 380, 270);
 			ctx.fillText("Click to try again", 380, 300);
 			ctx.restore();
+		}
+		
+		// Draw the particle selectors
+		ctx.save();
+		// Draw the first selector
+		ctx.beginPath();
+		ctx.arc(57,195,30,0,2*Math.PI);
+		ctx.fillStyle = "red";
+		ctx.fill();
+		
+		// Draw the second selector
+		ctx.beginPath();
+		ctx.arc(57,275,30,0,2*Math.PI);
+		ctx.fillStyle = "blue";
+		ctx.fill();
+		
+		// Draw the third selector
+		ctx.beginPath();
+		ctx.arc(57,355,30,0,2*Math.PI);
+		ctx.fillStyle = "green";
+		ctx.fill();
+		
+		// Draw the fourth selector
+		ctx.beginPath();
+		ctx.arc(57,435,30,0,2*Math.PI);
+		ctx.fillStyle = "purple";
+		ctx.fill();
+		
+		// Draw the number mapping for the selectors
+		ctx.fillStyle = "white";
+		ctx.fillText("1", 57, 198);
+		ctx.fillText("2", 57, 278);
+		ctx.fillText("3", 57, 358);
+		ctx.fillText("4", 57, 438);
+		ctx.restore();
+		
+		// Draw a border around the currently selected particle
+		ctx.lineWidth = 5;
+		ctx.strokeStyle = "white";
+		
+		if(game.pressed1 == true) {
+			ctx.beginPath();
+			ctx.arc(57,195,30,0,2*Math.PI);
+			ctx.stroke();
+		}
+		
+		if(game.pressed2 == true) {
+			ctx.beginPath();
+			ctx.arc(57,275,30,0,2*Math.PI);
+			ctx.stroke();
+		}
+		
+		if(game.pressed3 == true) {
+			ctx.beginPath();
+			ctx.arc(57,355,30,0,2*Math.PI);
+			ctx.stroke();
+		}
+		
+		if(game.pressed4 == true) {
+			ctx.beginPath();
+			ctx.arc(57,435,30,0,2*Math.PI);
+			ctx.stroke();
 		}
 
 		// TODO: Once more functions and states are complete, clean up this section for readability
