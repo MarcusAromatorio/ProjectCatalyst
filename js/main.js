@@ -27,23 +27,16 @@ var Catalyst = (function (game){
 	*
 	*/
 	game.update = function () {
-		// Temporary pause feature: will be improved. Used for debug purposes
-		// Currently cannot un-pause, used to look at interactions more closely
-		if(game.keydown[game.KEYBOARD["KEY_P"]] && !game.paused)
-			game.paused = true;
-		else
-			game.paused = false;
-
-		if(game.paused){
-			// Exit update()
-			console.log(game.GRAVITY.y);
-			game.backgroundAudio.pause();
-			return;
-		}
-		// End temporary pause feature
 
 		game.animationID = requestAnimationFrame(game.update);
 		game.deltaTime = calculateDeltaTime();
+
+		game.checkParticlePress();
+
+		if(game.paused && game.state == game.states.IN_GAME){
+			game.draw();
+			return;
+		}
 
 		// The following nested loops update each particle and test collisions between them
 		for(var i = 0; i < game.particles.length; i++){
@@ -117,37 +110,8 @@ var Catalyst = (function (game){
 		}
 		
 		// Pause the timer if the game state is not IN_GAME
-		if(game.state != game.states.IN_GAME) {
+		if(game.state != game.states.IN_GAME || (game.paused && game.state == game.states.IN_GAME)) {
 			clearInterval(game.timerInterval);
-		}
-		
-		// Change the pressed variables as the player selects particles
-		if(game.keydown[game.KEYBOARD["KEY_1"]]) {
-			game.pressed1 = true;
-			game.pressed2 = false;
-			game.pressed3 = false;
-			game.pressed4 = false;
-		}
-		
-		if(game.keydown[game.KEYBOARD["KEY_2"]]) {
-			game.pressed1 = false;
-			game.pressed2 = true;
-			game.pressed3 = false;
-			game.pressed4 = false;
-		}
-		
-		if(game.keydown[game.KEYBOARD["KEY_3"]]) {
-			game.pressed1 = false;
-			game.pressed2 = false;
-			game.pressed3 = true;
-			game.pressed4 = false;
-		}
-		
-		if(game.keydown[game.KEYBOARD["KEY_4"]]) {
-			game.pressed1 = false;
-			game.pressed2 = false;
-			game.pressed3 = false;
-			game.pressed4 = true;
 		}
 	}
 
@@ -205,6 +169,51 @@ var Catalyst = (function (game){
 	}
 
 	/*
+	*
+	* Method to switch the active particle type selected
+	*
+	* Requires: none
+	* Input: none
+	* Process: Set the appropriate game variables to true or false, depending on keypress
+	* Output: none
+	*
+	*/
+	game.checkParticlePress = function(){
+
+		// Change the pressed variables as the player selects particles
+		if(game.keydown[game.KEYBOARD["KEY_1"]] || game.keydown[game.KEYBOARD["KEY_NUM_1"]]) {
+			game.pressed1 = true;
+			game.pressed2 = false;
+			game.pressed3 = false;
+			game.pressed4 = false;
+		}
+		
+		if(game.keydown[game.KEYBOARD["KEY_2"]] || game.keydown[game.KEYBOARD["KEY_NUM_2"]]) {
+			game.pressed1 = false;
+			game.pressed2 = true;
+			game.pressed3 = false;
+			game.pressed4 = false;
+		}
+		
+		if(game.keydown[game.KEYBOARD["KEY_3"]] || game.keydown[game.KEYBOARD["KEY_NUM_3"]]) {
+			game.pressed1 = false;
+			game.pressed2 = false;
+			game.pressed3 = true;
+			game.pressed4 = false;
+		}
+		
+		if(game.keydown[game.KEYBOARD["KEY_4"]] || game.keydown[game.KEYBOARD["KEY_NUM_4"]]) {
+			game.pressed1 = false;
+			game.pressed2 = false;
+			game.pressed3 = false;
+			game.pressed4 = true;
+		}
+	}
+
+
+
+
+	/*
 	* Method to play a sound effect
 	*
 	* Requires: none
@@ -220,7 +229,7 @@ var Catalyst = (function (game){
 
 		game.currentEffect++;
 
-		if(game.currentEffect > game.soundSources.length){
+		if(game.currentEffect > game.soundSources.length - 1){
 			game.currentEffect = 0;
 		}
 	}
@@ -272,7 +281,7 @@ var Catalyst = (function (game){
 			ctx.font = 'bold 40px Orbitron';
 			ctx.fillText("Catalyst", 380, 270);
 			ctx.font = 'bold 20px Orbitron';
-			ctx.fillText("Click to begin", 380, 300);
+			ctx.fillText("Click to begin", 380, 310);
 			ctx.restore();
 		}
 		
@@ -291,6 +300,8 @@ var Catalyst = (function (game){
 		// Draw the objective text
 		if(game.state == game.states.IN_GAME) {
 			ctx.save();
+			if(game.paused)
+				ctx.fillText("Click the mouse to start the round", 320, 150);
 			ctx.fillText(game.levelInformation[game.currentLevel-2].objectiveText,320,30);
 			ctx.restore();
 		}
@@ -444,11 +455,11 @@ var Catalyst = (function (game){
 			game.makeParticles("demo", 40, 210, 250, 6);
 		}
 		
-		if(game.state == game.states.IN_GAME) {
-			game.timerInterval = setInterval(function(){game.timer -= 0.01},10);
-		}
 		
 		cancelAnimationFrame(game.animationID);
+
+		game.paused = true;
+
 		game.update();
 	}
 

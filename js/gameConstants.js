@@ -44,7 +44,13 @@ var Catalyst = (function (game) {
 		"KEY_1":49,
 		"KEY_2":50,
 		"KEY_3":51,
-		"KEY_4":52
+		"KEY_4":52,
+
+		// These keys are on the numpad to the right, rather than the row of numbers across the top of the keyboard
+		"KEY_NUM_1":97,
+		"KEY_NUM_2":98,
+		"KEY_NUM_3":99,
+		"KEY_NUM_4":100
 	};
 
 	// Requires: Vector2d

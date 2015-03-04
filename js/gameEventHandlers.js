@@ -64,6 +64,12 @@ var Catalyst = (function (game) {
 			game.reset();
 			return;
 		}
+
+		if(game.paused && game.state == game.states.IN_GAME){
+			game.paused = false;
+			game.timerInterval = setInterval(function(){game.timer -= 0.01},10);
+
+		}
 		
 		// Create particles when the player clicks in-game and progress to the end game state if they're gotten them all
 		if(game.state == game.states.IN_GAME) {

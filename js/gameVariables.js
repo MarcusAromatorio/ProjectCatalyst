@@ -25,7 +25,7 @@ var Catalyst = (function (game){
 	game.animationID;
 	game.deltaTime;
 	game.lastTime;
-	game.paused = false;
+	game.paused = true;
 	game.currentLevel = 0;
 	game.timer = 10;
 	game.timerString;
@@ -40,7 +40,7 @@ var Catalyst = (function (game){
 	game.soundEffect;
 	game.currentEffect = 0;
 	game.loseAudio;
-	game.pressed1 = false;
+	game.pressed1 = true;
 	game.pressed2 = false;
 	game.pressed3 = false;
 	game.pressed4 = false;
