@@ -502,6 +502,7 @@ var Catalyst = (function (game){
 		cancelAnimationFrame(game.animationID);
 
 		game.paused = true;
+		game.roundClicks = 1;
 
 		game.update();
 	}

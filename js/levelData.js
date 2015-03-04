@@ -30,7 +30,8 @@ var Catalyst = (function (game){
 		3, // LEVEL 2
 		3, // LEVEL 3
 		3, // LEVEL 4
-		3  // LEVEL 5
+		3, // LEVEL 5
+		3  // LEVEL 6
 	];
 			
 	// Returning the augmented game object back to the global scope to allow further augmentations
