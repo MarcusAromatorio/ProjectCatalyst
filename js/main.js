@@ -113,6 +113,10 @@ var Catalyst = (function (game){
 		if(game.state != game.states.IN_GAME || (game.paused && game.state == game.states.IN_GAME)) {
 			clearInterval(game.timerInterval);
 		}
+		
+		// Update the value of displayClicks with the current number of clicks available to the player
+		game.displayClicks = game.allowedClicks[0] - game.roundClicks + 1;
+		console.log(game.displayClicks);
 	}
 
 
@@ -325,8 +329,15 @@ var Catalyst = (function (game){
 		// Draw the objective text
 		if(game.state == game.states.IN_GAME) {
 			ctx.save();
-			if(game.paused)
+			if(game.paused) {
 				ctx.fillText("Click the mouse to start the round", 380, 120);
+				ctx.fillText("Clicks remaining: " + game.displayClicks, 380, 150);
+			}
+			else {
+				ctx.fillText("Clicks remaining: " + game.displayClicks, 380, 120);
+				
+				console.log(game.roundClicks);
+			}
 			ctx.fillText(game.levelInformation[game.currentLevel-2].objectiveText,320,30);
 			ctx.restore();
 		}

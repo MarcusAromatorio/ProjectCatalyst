@@ -45,6 +45,7 @@ var Catalyst = (function (game){
 	game.pressed3 = false;
 	game.pressed4 = false;
 	game.roundClicks = 1;
+	game.displayClicks;
 
 	// Returning the augmented game object back to the global scope to allow further augmentations
 	return game;
