@@ -331,12 +331,11 @@ var Catalyst = (function (game){
 			ctx.save();
 			if(game.paused) {
 				ctx.fillText("Click the mouse to start the round", 380, 120);
-				ctx.fillText("Clicks remaining: " + game.displayClicks, 380, 150);
+				ctx.fillText("Clicks remaining: " + (game.allowedClicks[game.currentLevel - 2] + 1 - game.roundClicks), 380, 150);
 			}
 			else {
-				ctx.fillText("Clicks remaining: " + game.displayClicks, 380, 120);
+				ctx.fillText("Clicks remaining: " + (game.allowedClicks[game.currentLevel - 2] + 1 - game.roundClicks), 380, 120);
 				
-				console.log(game.roundClicks);
 			}
 			ctx.fillText(game.levelInformation[game.currentLevel-2].objectiveText,320,30);
 			ctx.restore();
@@ -514,7 +513,7 @@ var Catalyst = (function (game){
 		cancelAnimationFrame(game.animationID);
 
 		game.paused = true;
-		game.roundClicks = 1;
+		game.roundClicks = 0;
 
 		game.update();
 	}
