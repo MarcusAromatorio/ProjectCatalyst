@@ -181,7 +181,11 @@ var Catalyst = (function (game){
 				// Clear the scores Array and re-populate it with the 5 high scores from each level
 				game.scoresArray = [];
 				for (var i = 0; i < 6; i++) {
-					game.scoresArray.push(game.levelInformation[i].highScores);
+					game.scoresArray.push(game.levelInformation[i].highScores[0]);
+					game.scoresArray.push(game.levelInformation[i].highScores[1]);
+					game.scoresArray.push(game.levelInformation[i].highScores[2]);
+					game.scoresArray.push(game.levelInformation[i].highScores[3]);
+					game.scoresArray.push(game.levelInformation[i].highScores[4]);
 				}
 			
 				// Save the high scores to local storage

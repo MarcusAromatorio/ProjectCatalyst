@@ -58,16 +58,17 @@ var Catalyst = (function(){
 			//Console.log("keyup=" + e.keyCode);
 			game.keydown[e.keyCode] = false;
 		});
-		
 		// Load the high scores saved to local storage
 		game.scoresArray = JSON.parse(localStorage.getItem('savedScores'));
 		if(game.scoresArray != null) {
 			for (var i = 0; i < 6; i++) {
-				game.levelInformation[i].highScores = game.scoresArray[i];
+				game.levelInformation[i].highScores[0] = game.scoresArray[0+i];
+				game.levelInformation[i].highScores[1] = game.scoresArray[1+i];
+				game.levelInformation[i].highScores[2] = game.scoresArray[2+i];
+				game.levelInformation[i].highScores[3] = game.scoresArray[3+i];
+				game.levelInformation[i].highScores[4] = game.scoresArray[4+i];
 			}
 		}
-		console.log(game.levelInformation[0].highScores);
-		console.log(game.levelInformation[1].highScores);
 
 		// Before the game starts calculatons, start the background music
 		game.backgroundAudio.play();
