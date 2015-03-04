@@ -215,7 +215,7 @@ var Catalyst = (function (game) {
 					this.type = "oxygen";
 					this.mass = 0.5;
 					this.radius = 10;
-					this.color = "honeydew" // Very white-ish color
+					this.color = "purple";
 					this.density = 0.1;
 				}
 				else{
