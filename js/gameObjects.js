@@ -190,6 +190,9 @@ var Catalyst = (function (game) {
 		if(!shouldReact)
 			return;
 
+		// Play a sound to notify a reaction
+		game.playSoundEffect();
+
 		// Switch statement for particle type
 		switch(this.type){
 			case "demo":

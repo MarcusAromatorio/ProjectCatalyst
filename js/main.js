@@ -37,6 +37,7 @@ var Catalyst = (function (game){
 		if(game.paused){
 			// Exit update()
 			console.log(game.GRAVITY.y);
+			game.backgroundAudio.pause();
 			return;
 		}
 		// End temporary pause feature
@@ -105,8 +106,14 @@ var Catalyst = (function (game){
 		
 		// Check to see if the player has failed a level
 		if(game.timer <= 0) {
+
+			// Play the lose audio only once
+			if(game.state != game.states.LEVEL_FAILED)
+				game.loseAudio.play();
+
 			game.state = game.states.LEVEL_FAILED;
 			game.timer = 0;
+
 		}
 		
 		// Pause the timer if the game state is not IN_GAME
@@ -137,6 +144,9 @@ var Catalyst = (function (game){
 		if(gameWon == true) {
 			// Clear the particles on-screen and progress to the ENDED_GAME state
 			game.state = game.states.ENDED_GAME;
+
+			// Play the game-won audio bit
+			game.winAudio.play();
 			
 			// Save the high scores
 			if(game.state == game.states.ENDED_GAME) {
@@ -163,6 +173,27 @@ var Catalyst = (function (game){
 		}
 		
 		return gameWon;
+	}
+
+	/*
+	* Method to play a sound effect
+	*
+	* Requires: none
+	* Inputs: none
+	* Process: Set soundEffect source to an index of the soundSources array and play it
+	* Output: none
+	*
+	*/
+	game.playSoundEffect = function(){
+
+		game.soundEffect.src = game.soundSources[game.currentEffect];
+		game.soundEffect.play();
+
+		game.currentEffect++;
+
+		if(game.currentEffect > game.soundSources.length){
+			game.currentEffect = 0;
+		}
 	}
 
 	/*

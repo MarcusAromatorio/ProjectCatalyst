@@ -13,8 +13,20 @@
 		<script src = "js/gameObjects.js"></script>
 		<script src = "js/vector2d.js"></script>
 		<script src = "js/levelData.js"></script>
+
+		<style type = "text/css">
+			#audioControls{
+				display:none;
+			}
+		</style>
 	</head>
 	<body>
 		<canvas width="640" height = "480">Your browser is bad and you should feel bad</canvas>
 	</body>
+	<section id="audioControls">
+		<audio id = "bgMusic" src = "sounds/Electrodoodle.mp3" controls loop></audio>
+		<audio id = "effectSounds" controls></audio>
+		<audio id = "winSound" src = "sounds/winSound.mp3" controls></audio>
+		<audio id = "loseSound" src = "sounds/loseSound.mp3" controls></audio>
+	</section>
 </html>

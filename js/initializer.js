@@ -34,6 +34,15 @@ var Catalyst = (function(){
 
 		game.GRAVITY = vec2d.newVector(0.0, 1.5);
 
+		game.backgroundAudio = document.querySelector("#bgMusic");
+		game.backgroundAudio.volume = 0.15;
+		game.winAudio = document.querySelector("#winSound");
+		game.winAudio.volume = 0.6;
+		game.loseAudio = document.querySelector("#loseSound");
+		game.loseAudio.volume = 0.32;
+		game.soundEffect = document.querySelector("#effectSounds");
+		game.soundEffect.volume = 0.31;
+
 		// After defining game variables, window events and in-game functionalities are connected
 		// window-related and user-input functions are located in the gameEventHandlers script
 		// The gameEventHandlers script augments the game object to have these events already defined
@@ -59,6 +68,9 @@ var Catalyst = (function(){
 		}
 		console.log(game.levelInformation[0].highScores);
 		console.log(game.levelInformation[1].highScores);
+
+		// Before the game starts calculatons, start the background music
+		game.backgroundAudio.play();
 
 		// Initialization finishes by calling the game's reset method, which is game-state dependent
 		game.reset();

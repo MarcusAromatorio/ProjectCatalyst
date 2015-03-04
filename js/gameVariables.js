@@ -34,6 +34,12 @@ var Catalyst = (function (game){
 	game.scoreString;
 	game.scoreSubstring;
 	game.scoresArray = [];
+	game.soundSources = ["sounds/Dut.mp3", "sounds/FastPop.mp3", "sounds/HighPop.mp3", "sounds/LowBloop.mp3", "sounds/Plop.mp3", "sounds/Pop.mp3"];
+	game.winAudio;
+	game.backgroundAudio;
+	game.soundEffect;
+	game.currentEffect = 0;
+	game.loseAudio;
 
 	// Returning the augmented game object back to the global scope to allow further augmentations
 	return game;
