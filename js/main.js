@@ -503,7 +503,7 @@ var Catalyst = (function (game){
 		
 		if(game.state == game.states.IN_GAME && game.currentLevel == 6) {
 			// To begin the demonstration, fifty demo particles are added to the scene
-			game.makeParticles("demo", 40, 210, 250, 6);
+			game.makeParticles("oxygen", 40, 210, 250, 6);
 		}
 		
 		if(game.state == game.states.IN_GAME && game.currentLevel == 7) {
