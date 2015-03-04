@@ -79,7 +79,7 @@ var Catalyst = (function (game) {
 		
 		// When the player clicks on the level end screen, progress to the next level
 		if(game.state == game.states.ENDED_GAME) {
-			if(game.currentLevel <= 2) {
+			if(game.currentLevel <= 2) {	
 				game.timer = 10;
 				game.state = game.states.IN_GAME;
 				game.reset();

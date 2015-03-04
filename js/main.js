@@ -26,8 +26,7 @@ var Catalyst = (function (game){
 	* Output: none
 	*
 	*/
-	game.update = function (){
-
+	game.update = function () {
 		// Temporary pause feature: will be improved. Used for debug purposes
 		// Currently cannot un-pause, used to look at interactions more closely
 		if(game.keydown[game.KEYBOARD["KEY_P"]] && !game.paused)
@@ -138,6 +137,29 @@ var Catalyst = (function (game){
 		if(gameWon == true) {
 			// Clear the particles on-screen and progress to the ENDED_GAME state
 			game.state = game.states.ENDED_GAME;
+			
+			// Save the high scores
+			if(game.state == game.states.ENDED_GAME) {
+				// Add the player's score into the high score array
+				game.levelInformation[game.currentLevel-2].highScores.push(game.timer);
+				
+				// Order the highscores from highest(fastest) to lowest(slowest)
+				game.levelInformation[game.currentLevel-2].highScores.sort(function(a,b){return b-a});
+				
+				// Splice the high scores arrays, so that there are only 5 in each
+				for (var i = 0; i < 2; i++) {
+					game.levelInformation[i].highScores = game.levelInformation[i].highScores.splice(0,5);
+				}
+				
+				// Clear the scores Array and re-populate it with the 5 high scores from each level
+				game.scoresArray = [];
+				for (var i = 0; i < 2; i++) {
+					game.scoresArray.push(game.levelInformation[i].highScores);
+				}
+			
+				// Save the high scores to local storage
+				localStorage.setItem('savedScores', JSON.stringify(game.scoresArray));
+			}
 		}
 		
 		return gameWon;
@@ -213,10 +235,24 @@ var Catalyst = (function (game){
 			ctx.restore();
 		}
 		
-		// Draw the level completed text
+		// Draw the level completed text and high scores
 		if(game.state == game.states.ENDED_GAME) {
 			ctx.save();
 			ctx.fillText("You've won! Click to continue", 380, 280);
+			ctx.fillText("High Scores For This Level:", 380, 310);
+			
+			for (i = 0; i < 5; i++) {
+				if(game.levelInformation[game.currentLevel-2].highScores[i] == 1){
+					ctx.fillText("#"+ (i+1) +" - 1.00", 380, 340+(i*30));
+				}
+				else {
+					// Update strings for score display, gets around floating point accuracy problems
+					game.scoreString = game.levelInformation[game.currentLevel-2].highScores[i].toString();
+					game.scoreSubstring = game.scoreString.substring(0,4);
+					ctx.fillText("#"+ (i+1) +" - "+ game.scoreSubstring, 380, 340+(i*30));
+				}
+			}
+			
 			ctx.restore();
 		}
 		

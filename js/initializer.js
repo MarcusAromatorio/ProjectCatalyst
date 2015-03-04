@@ -49,6 +49,16 @@ var Catalyst = (function(){
 			//Console.log("keyup=" + e.keyCode);
 			game.keydown[e.keyCode] = false;
 		});
+		
+		// Load the high scores saved to local storage
+		game.scoresArray = JSON.parse(localStorage.getItem('savedScores'));
+		if(game.scoresArray != null) {
+			for (var i = 0; i < 2; i++) {
+				game.levelInformation[i].highScores = game.scoresArray[i];
+			}
+		}
+		console.log(game.levelInformation[0].highScores);
+		console.log(game.levelInformation[1].highScores);
 
 		// Initialization finishes by calling the game's reset method, which is game-state dependent
 		game.reset();

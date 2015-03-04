@@ -31,6 +31,9 @@ var Catalyst = (function (game){
 	game.timerString;
 	game.timerSubstring;
 	game.timerInterval;
+	game.scoreString;
+	game.scoreSubstring;
+	game.scoresArray = [];
 
 	// Returning the augmented game object back to the global scope to allow further augmentations
 	return game;
