@@ -171,6 +171,7 @@ var Catalyst = (function (game) {
 		// Temporary variable to track if a reaction will occur
 		var shouldReact = false;
 		var alternateReaction = false;
+		var otherType; // Used in oxygen reactions
 
 		// Check the list of collided particles for specific types
 		for(var i = 0; i < this.collisionList.length; i++){
@@ -183,6 +184,10 @@ var Catalyst = (function (game) {
 			else if(this.collisionList[i].type == "oxygen" && this.type == "catalyst2"){
 				shouldReact = true;
 				alternateReaction = true;
+			}
+			else if(this.type == "oxygen"){
+				otherType = this.collisionList[i].type;
+				shouldReact = true;
 			}
 		}// End for-loop
 
@@ -226,6 +231,39 @@ var Catalyst = (function (game) {
 					this.density = 1.0;
 				}
 			break;
+			case "oxygen":
+				switch(otherType){
+					case "catalyst": // The catalyst particle has different properties than default
+						this.mass = 2.2;
+						this.radius = 3;
+						this.color = "red";
+						this.density = 1.45;
+						this.type = "catalyst";
+					break;
+					case "catalyst2": // The second catalyst particle is large and blue
+						this.mass = 6.4;
+						this.radius = 7;
+						this.color = "blue";
+						this.density = 0.65;
+						this.type = "catalyst2";
+					break;
+					case "oxygen":
+						this.mass = 0.5;
+						this.radius = 10;
+						this.color = "purple";
+						this.density = 0.1;
+						this.type = "oxygen";
+					break;
+					case "demo": // The demonstration chemical is the same as the default
+					default:
+						this.mass = 4.0;
+						this.radius = 5;
+						this.color = "green";
+						this.density = 1.0;
+						this.type = "demo";
+					break;
+				}
+			break
 			default:
 				// Catalysts and default-type particles do nothing on their own & this block should not execute
 				console.log( "Erroneous collision response");

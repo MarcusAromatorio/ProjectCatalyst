@@ -455,7 +455,6 @@ var Catalyst = (function (game){
 			game.makeParticles("demo", 40, 210, 250, 6);
 		}
 		
-		
 		cancelAnimationFrame(game.animationID);
 
 		game.paused = true;
